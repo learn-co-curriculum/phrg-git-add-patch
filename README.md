@@ -16,9 +16,13 @@ Take a few minutes to read about some of the ways one can pass additional option
 
 ## Git Patch
 
-To stage our code, we have been using `git add <path>`, where `<path>` is the location of the file or directory we wish to stage. Often we wish to stage all of our changes, so we use `git add .`. But sometimes we make multiple changes across an application. To divide our commits up logically, facilitating easier code review and creating a better git history, we need to only stage some changes. And sometimes just some changes in a single file. This is where the `--path` option comes handy.
+To stage our code, we have been using `git add <path>`, where `<path>` is the location of the file or directory we wish to stage. Often we wish to stage all of our changes, so we use `git add .`. But sometimes we make changes across an application. To divide our commits up logically we need to stage only select changes. In some cases, select changes containted in a single file. This is where the `--path` option comes handy.
 
-Here is an example.
+## Why
+
+Creating logical commits facilitates an easier code review for our team. This means they do a better job understanding your changes, offer better feedback, and make it easy for them to detect a possible bug, which can be a life saver for our application. It also creates a better git history for our project. A few weeks or months from now a developer may need to look back at the git history to identify how a feature was added.
+
+### Example
 
 For our reptile PR, we've added `:show` views for our Lizard and Turtle resources. We completed the lizard show logic first, then the turtle logic, but forgot to commit in between. We go to commit our lizard files first, but notice that our `routes.rb` contains logic for both reptiles. `git diff` returns:
 
@@ -40,9 +44,9 @@ index f4d4adc..927f7f9 100644
  resources :xylophones
 ```
 
-For our first commit, all we want is the line of code that adds the `:show` route to the `:lizards` resource. We do not want to stage the added route for `:turtles`.
+For our first commit, all we want is the line of code that adds the `:show` route to the `:lizards` resource. We do not want the new `:turtles` route.
 
-`git add --patch` gives us the ability to stage only a section or "hunk" of a file. So let's try it:
+`git add --patch` gives us the ability to stage only a "hunk" of the file.
 
 ```
 $ git add --patch config/routes.rb
@@ -63,7 +67,7 @@ index f4d4adc..927f7f9 100644
 Stage this hunk [y,n,q,a,d,s,e,?]?
 ```
 
-`git` prompts us with a lot of options of how to continue, `[y,n,q,a,d,s,e,?]`. Let's use the `?` option to see what each of these mean:
+Using the `--patch` option launches Git's Interactive Mode, providing the user prompts with what to do next. Here we are prompted with a number of options for how to continue, `[y,n,q,a,d,s,e,?]`. Let's use the `?` option to see what each of these mean. Picking an option is as easy as typing the character and pressing Enter.
 
 ```
 Stage this hunk [y,n,q,a,d,s,e,?]? ?
@@ -88,7 +92,7 @@ e - manually edit the current hunk
 Stage this hunk [y,n,q,a,d,s,e,?]?
 ```
 
-Based on the "hunk" provided, it looks like if we used `y` we would still be staging too many of our changes. So let's `split` this hunk with the `s` option:
+Based on the hunk provided, it looks like if we used `y` we would still be staging too many of our changes. So let's `split` this hunk with the `s` option:
 
 ```
 Stage this hunk [y,n,q,a,d,s,e,?]? s
@@ -103,7 +107,7 @@ Split into 2 hunks.
 Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]?
 ```
 
-`git` has returned that it `Split into 2 hunks.`, and now only our `:lizards` diff is shown. This looks good! Lets stage it:
+`git` has returned that it `Split into 2 hunks.`, and now only our `:lizards` diff is reported. This looks good! Lets stage it:
 
 
 ```
@@ -123,7 +127,7 @@ Stage this hunk [y,n,q,a,d,K,g,/,e,?]? n
 $
 ```
 
-Having gotten to the end of the changes in our `routes.rb`, our prompts stop and we exit back to the command line. Let's verify that we've only staged the lizard logic with `git status` and `git diff`:
+Having gotten to the end of the changes in our `routes.rb`, our prompts stop, and we exit back to the command line. Let's verify that we've only staged the lizard logic with `git status` and `git diff`:
 
 ```
 $ git status config/routes.rb
@@ -153,7 +157,7 @@ index 8ebdb30..927f7f9 100644
  resources :xylophones
 ```
 
-`git status config/routes.rb` reveals that our `routes.rb` has both staged and unstaged changes (good!), and `git diff config/routes.rb` reveals that only the `:turtles` line is unstaged (perfect!).
+`git status config/routes.rb` reveals that our `routes.rb` has both staged and unstaged changes (good!). `git diff config/routes.rb` reveals that only the `:turtles` line is unstaged (perfect!). We are good to continue adding files until we are ready to create our `:lizards` focused commit.
 
 ## Resources
 
