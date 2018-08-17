@@ -1,4 +1,4 @@
-# Git Add
+# Git Add --Patch
 
 `git` is a powerful and complex CLI that manages versions of your code. This lesson explores using the `git add --patch` option.
 
