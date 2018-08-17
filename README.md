@@ -162,4 +162,4 @@ index 8ebdb30..927f7f9 100644
 ## Resources
 
 - [`git` documentation](https://git-scm.com/doc)
-
+- [`git add --patch` documentation](https://git-scm.com/docs/git-add#git-add--p)
