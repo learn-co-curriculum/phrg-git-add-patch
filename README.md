@@ -16,7 +16,7 @@ Take a few minutes to read about some of the ways one can pass additional option
 
 ## Git Patch
 
-To stage our code, we have been using `git add <path>`, where `<path>` is the location of the file or directory we wish to stage. Often we wish to stage all of our changes, so we use `git add .`. But sometimes we make changes across an application. To divide our commits up logically we need to stage only select changes. In some cases, select changes containted in a single file. This is where the `--path` option comes handy.
+To stage our code, we have been using `git add <path>`, where `<path>` is the location of the file or directory we wish to stage. Often we wish to stage all of our changes, so we use `git add .`. But sometimes we make changes across an application. To divide our commits up logically we need to stage only select changes. In some cases, select changes contained in a single file. This is where the `--patch` option comes handy.
 
 ## Why
 
